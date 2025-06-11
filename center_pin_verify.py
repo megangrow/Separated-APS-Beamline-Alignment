@@ -28,23 +28,23 @@ class DummyMotor():
         print(f"DummyMotor.move called on {self.name}")
 
 # Get edges[] from Step 2
-with open('edges.pkl', 'rb') as f:
+with open(os.path.join('data', 'edges.pkl'), 'rb') as f:
     edges = pickle.load(f)
 
 # Get params[] from Step 3
-with open('params.pkl', 'rb') as f:
+with open(os.path.join('data', 'params.pkl'), 'rb') as f:
     params = pickle.load(f)
 
 # Get object coordinates from Step 3
-with open('coordinates.pkl', 'rb') as f:
+with open(os.path.join('data', 'coordinates.pkl'), 'rb') as f:
     x_universal, y_universal = pickle.load(f)
 
 # Load all image masks from Step 1
-with open('all_image_masks.pkl', 'rb') as f:
+with open(os.path.join('data', 'all_image_masks.pkl'), 'rb') as f:
     all_image_masks = pickle.load(f)
 
 # Get answer_normalization from Step 1
-with open('normalize_flag.json', 'r') as f:
+with open(os.path.join('data', 'normalize_flag.json'), 'r') as f:
     data = json.load(f)
 answer_normalization = data['normalize']
 

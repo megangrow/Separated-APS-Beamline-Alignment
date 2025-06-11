@@ -17,12 +17,6 @@ import torch
 import cv2
 from scipy.ndimage import median_filter
 
-# Print intro
-print(f'***********************************************************************************************************************************')
-print(f'Three plots will open in your browser. Please pick a coordinate inside the beam, outside the object for entering into Step 2 \'submit_beam.py\'')
-print(f'Please pick another coordinate inside the object for entering into Step 3 \'run_all_images.py\'')
-print(f'***********************************************************************************************************************************')
-
 # This class creates a dummy motor for testing purposes
 class DummyMotor():
     def __init__(self, name):
