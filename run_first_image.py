@@ -30,6 +30,10 @@ class DummyMotor():
     def move(self, *args, **kwargs):
         print(f"DummyMotor.move called on {self.name}")
 
+# Create folder for data
+if not os.path.exists('data'):
+    os.makedirs('data')
+
 # Set parameters
 all_image_masks = []
 pname = '/home/mgrow/APS_Test_Images' # This will change based on local setup
@@ -173,15 +177,15 @@ display_mask = (display_mask > 0).astype(np.uint8) * 255
 all_image_masks.append(mask_image_norm)
 
 # Save all_image_masks for use in Step 2
-with open('all_image_masks.pkl', 'wb') as f:
+with open(os.path.join('data', 'all_image_masks.pkl'), 'wb') as f:
     pickle.dump(all_image_masks, f)
 
 # Save normalization answer for Steps 3, 4
-with open('normalize_flag.json', 'w') as f:
+with open(os.path.join('data', 'normalize_flag.json'), 'w') as f:
     json.dump({'normalize': answer_normalization}, f)
 
 # Save width and height for Step 3
-with open('image_dimensions.pkl', 'wb') as f:
+with open(os.path.join('data', 'image_dimensions.pkl'), 'wb') as f:
     pickle.dump({'width': width, 'height': height}, f)
 
 # Create + launch interactive image plots for each image
@@ -197,5 +201,5 @@ x2 = float(input("Enter x for second coordinate (inside object): "))
 y2 = float(input("Enter y for second coordinate (inside object): "))
 coord1 = (x1, y1)
 coord2 = (x2, y2)
-with open('user_coordinates.pkl', 'wb') as f:
+with open(os.path.join('data', 'user_coordinates.pkl'), 'wb') as f:
     pickle.dump({'coord1': coord1, 'coord2': coord2}, f)

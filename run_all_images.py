@@ -28,26 +28,26 @@ class DummyMotor():
         print(f"DummyMotor.move called on {self.name}")
 
 # Load all image masks from Step 1
-with open('all_image_masks.pkl', 'rb') as f:
+with open(os.path.join('data', 'all_image_masks.pkl'), 'rb') as f:
     all_image_masks = pickle.load(f)
 
 # Get edges[] from Step 2
-with open('edges.pkl', 'rb') as f:
+with open(os.path.join('data', 'edges.pkl'), 'rb') as f:
     edges = pickle.load(f)
 
 # Get answer_normalization from Step 1
-with open('normalize_flag.json', 'r') as f:
+with open(os.path.join('data', 'normalize_flag.json'), 'r') as f:
     data = json.load(f)
 answer_normalization = data['normalize']
 
 # Get width and height from Step 1
-with open('image_dimensions.pkl', 'rb') as f:
+with open(os.path.join('data', 'image_dimensions.pkl'), 'rb') as f:
     dimensions = pickle.load(f)
 width = dimensions['width']
 height = dimensions['height']
 
 # Get x,y coordinates inside object from Step 1
-with open('user_coordinates.pkl', 'rb') as f:
+with open(os.path.join('data', 'user_coordinates.pkl'), 'rb') as f:
     coords = pickle.load(f)
 x, y = coords['coord2']
 x_coor = int(x)
@@ -310,12 +310,12 @@ radius = params[1]
 start_theta = params[2]
 
 # Save params[] for Step 4
-with open('params.pkl', 'wb') as f:
+with open(os.path.join('data', 'params.pkl'), 'wb') as f:
     pickle.dump(params, f)
 
 # Save object coordinates for Step 4
 coordinates = (x_coor, y_coor)
-with open('coordinates.pkl', 'wb') as f:
+with open(os.path.join('data', 'coordinates.pkl'), 'wb') as f:
     pickle.dump(coordinates, f)
 
 print("Plots opening in your browser")

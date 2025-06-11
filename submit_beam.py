@@ -6,6 +6,7 @@
 ########################################################################################
 import numpy as np
 import pickle
+import os
 
 ########################################################################################
 # This function finds the edge coordinates by going through all masks to find one 
@@ -43,11 +44,11 @@ def calculate_mid(x, y):
 ########################################################################################
 
 # Load all image masks from Step 1
-with open('all_image_masks.pkl', 'rb') as f:
+with open(os.path.join('data', 'all_image_masks.pkl'), 'rb') as f:
     all_image_masks = pickle.load(f)
 
 # Get x,y coordinates inside beam from Step 1
-with open('user_coordinates.pkl', 'rb') as f:
+with open(os.path.join('data', 'user_coordinates.pkl'), 'rb') as f:
     coords = pickle.load(f)
 x, y = coords['coord1']
 x_coor = int(x)
@@ -61,5 +62,5 @@ edges.append(max_x)
 print(f"Beam selected, edges are {max_x} and {min_x}")
 
 # Save edges[] for Step 3
-with open('edges.pkl', 'wb') as f:
+with open(os.path.join('data', 'edges.pkl'), 'wb') as f:
     pickle.dump(edges, f)
