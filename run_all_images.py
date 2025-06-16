@@ -270,8 +270,8 @@ def graph_scatter(first_midpoint, rots, y_coor):
     params, params_cov = curve_fit(func_fitting, theta, coords, p0=p0, bounds=bounds)
     df_fit = pd.DataFrame({'x': theta, 'y': [math.ceil(value) for value in func_fitting(theta, params[0], params[1], params[2])]})
     scatter = go.Figure()
-    scatter.add_trace(go.Scatter(x=df['x'], y=df['y']))
-    scatter.add_trace(go.Scatter(x=df_fit['x'], y=df_fit['y']))
+    scatter.add_trace(go.Scatter(x=df['x'], y=df['y'], name="Measured Midpoints"))
+    scatter.add_trace(go.Scatter(x=df_fit['x'], y=df_fit['y'], name="Fitted Curve"))
     scatter.update_layout(xaxis_title='Angle (Degrees)', yaxis_title='Midpoint', plot_bgcolor='black')
     scatter.update_traces(mode='markers')
 
@@ -304,7 +304,7 @@ def func_fitting(x, oft, rad, st):
 first_midpoint, no_x, no_y = get_mid_point(all_image_masks[0], y_coor, x_coor)
 
 # Move motor through rotation, generate masks for a combined mask image, fit scatter plot and params
-reg, scatter, params = graph_scatter(first_midpoint, angle_rotation, y_coor)
+reg, scatter, params = graph_scatter(first_midpoint, angle_rotation, y_coor, im_0, width, height)
 offset = params[0]
 radius = params[1]
 start_theta = params[2]

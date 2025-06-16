@@ -52,7 +52,7 @@ def submit_beam() -> str:
     """Submit beam - identifies and saves the horizontal edges of a beam at a given pixel coordinate from image mask data."""
     all_image_masks, y_coor, x_coor = open_data()
     
-    # Find + save edge coordinates
+    # Find and save edge coordinates
     mid, min_x, max_x = get_mid_point(all_image_masks[0], y_coor, x_coor)
     edges = []
     save_edges(edges, min_x, max_x)

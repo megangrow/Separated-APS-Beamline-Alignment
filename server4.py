@@ -257,11 +257,12 @@ def save_data(x_coor, y_coor, reg, scatter, params, first_midpoint):
 @mcp.tool
 def run_all_images() -> str:
     """Run all images - processes a series of images to analyze and track midpoint positions through rotation, using segmentation masks and motor control simulation, then fits and visualizes the resulting data."""
+    global width, height, im_0
     # Get initial midpoint and edges from first mask
     first_midpoint, no_x, no_y = get_mid_point(all_image_masks[0], y_coor, x_coor)
     
     # Move motor through rotation, generate masks for a combined mask image, fit scatter plot and params
-    reg, scatter, params = graph_scatter(first_midpoint, angle_rotation, y_coor)
+    reg, scatter, params = graph_scatter(first_midpoint, angle_rotation, y_coor, im_0, width, height)
     
     save_data(x_coor, y_coor, reg, scatter, params, first_midpoint)
     return 'All images have been run'

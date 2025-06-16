@@ -188,6 +188,14 @@ px.imshow(im_1, color_continuous_scale='gray', template='plotly_dark').update_la
 px.imshow(image_norm, color_continuous_scale='gray', template='plotly_dark').update_layout(title="Normalized Image").show()
 px.imshow(display_mask, color_continuous_scale='jet', template='plotly_dark').update_layout(title="Combined Mask").show()
 
+# Alternatively, save plots locally
+fig1 = px.imshow(im_1, color_continuous_scale='gray', template='plotly_dark').update_layout(title="Initial Image")
+fig1.write_image(os.path.join(output, "initial_image.png"))
+fig2 = px.imshow(image_norm, color_continuous_scale='gray', template='plotly_dark').update_layout(title="Normalized Image")
+fig2.write_image(os.path.join(output, "normalized_image.png"))
+fig3 = px.imshow(display_mask, color_continuous_scale='jet', template='plotly_dark').update_layout(title="Combined Mask")
+fig3.write_image(os.path.join(output, "combined_mask.png"))
+
 # Get and save coordinates for Steps 2, 3
 x1 = float(input("Enter x for first coordinate (inside beam): "))
 y1 = float(input("Enter y for first coordinate (inside beam): "))
