@@ -48,8 +48,8 @@ These servers are formatted to have one server, *main_server.py*, also called th
 
 1. Run first image: Captures and processes images for beamline alignment, generates masks and saves data for further steps
 2. Get coordinates: Automatically identifies and returns beam and object coordinates from an input image and saves horizontal beam edges.
-3. Processes a series of images to analyze and track midpoint positions through rotation, using segmentation masks and motor control simulation, then fits and visualizes the resulting data.
-4. Automates pin alignment and verification using motor control, image processing, and segmentation.
+3. Run all images: Processes a series of images to analyze and track midpoint positions through rotation, using segmentation masks and motor control simulation, then fits and visualizes the resulting data.
+4. Center pin: Automates pin alignment and verification using motor control, image processing, and segmentation.
 
 All functions used more than once can be found in *utils.py* in the tools folder. This allows for easier maintenance of code and reduces repetition. All parameters can be found in *config.py*. By reading and overwriting parameters through this centralized file, we ensure consistency across modules without needing to pass excessive parameters throughout the code.
 
