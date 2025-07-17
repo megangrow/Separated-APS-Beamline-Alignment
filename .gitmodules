@@ -1,0 +1,3 @@
+[submodule "mcp_project/argo_bridge"]
+	path = mcp_project/argo_bridge
+	url = https://github.com/AdvancedPhotonSource/argo_bridge.git
