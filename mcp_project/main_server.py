@@ -1,3 +1,6 @@
+# argo_bridge custom base url:http://localhost:7285
+# argo-proxy custom base url: http://localhost:55068
+
 from fastmcp import FastMCP
 from tools.run_first_image_tool import run_first_image_core
 from tools.get_coordinates_tool import get_coordinates_core

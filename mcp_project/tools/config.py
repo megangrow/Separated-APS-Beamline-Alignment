@@ -20,7 +20,6 @@ answer_normalization = 0
 pixel_size = 1.172
 file_type = 'TIFF1'
 camera_type = 'cam1'
-cam_name = '1idPG1'
 froot = 'pin_alignment'
 test_images = sorted(glob.glob(os.path.join(pname, '*.tiff')))
 
@@ -43,17 +42,24 @@ radius = None
 start_theta = None
 
 
+# Motor + camera names
+cam_name = '1idPG1'
+samX_nm = '1ide1:m34' # sample x-direction
+samZ_nm = '1ide1:m36' # sample z-direction
+vertRot_nm = '1ide:m9' # vertical rotation axis
+transRotAx_nm = '1ide1:m101' # translation of axis under rotation stage
+
 # Motor setup - test
-# mtr_samX  = DummyMotor('1ide1:m34') # sample x-direction
-# mtr_samZ  = DummyMotor('1ide1:m36') # sample z-direction
-# mtr_vertRot = DummyMotor('1ide:m9') # vertical rotation axis
-# mtr_transRotAx  = DummyMotor('1ide1:m101') # translation of axis under rotation stage 
+mtr_samX   = DummyMotor(samX_nm) 
+mtr_samZ   = DummyMotor(samZ_nm) 
+mtr_vertRot  = DummyMotor(vertRot_nm)
+mtr_transRotAx  = DummyMotor(transRotAx_nm)
 
 # Motor setup - actual
-mtr_samX = PyEpics.Motor('1ide1:m34') # sample x-direction
-mtr_samZ = PyEpics.Motor('1ide1:m36') # sample z-direction
-mtr_vertRot = PyEpics.Motor('1ide:m9') # vertical rotation axis
-mtr_transRotAx = PyEpics.Motor('1ide1:m101') # translation of axis under rotation stage 
+# mtr_samX = PyEpics.Motor(samX_nm) 
+# mtr_samZ = PyEpics.Motor(samZ_nm)
+# mtr_vertRot = PyEpics.Motor(vertRot_nm) 
+# mtr_transRotAx = PyEpics.Motor(transRotAx_nm) 
 PyEpics.caput(cam_name + ':' + file_type + ':FileName', froot, wait=True)
 
 # Set up SAM model
