@@ -9,14 +9,14 @@ from .motor import DummyMotor
 from segment_anything import sam_model_registry, SamAutomaticMaskGenerator
 
 # Local-specific parameters (change based on setup)
-output = '/home/mgrow/Image_Outputs'
+output = '/home/mgrow/mcp_project/data'
 pname = '/home/mgrow/APS_Test_Images'
 path_to_sam = '/home/mgrow/mcp_project/sam_vit_h_4b8939.pth'
 
 # Static parameters - should be specific to setup eventually
 angle_rotation = 5
 time_exposure = 2
-answer_normalization = 0 
+answer_normalization = 1 
 pixel_size = 1.172
 file_type = 'TIFF1'
 camera_type = 'cam1'
@@ -60,7 +60,7 @@ mtr_transRotAx  = DummyMotor(transRotAx_nm)
 # mtr_samZ = PyEpics.Motor(samZ_nm)
 # mtr_vertRot = PyEpics.Motor(vertRot_nm) 
 # mtr_transRotAx = PyEpics.Motor(transRotAx_nm) 
-PyEpics.caput(cam_name + ':' + file_type + ':FileName', froot, wait=True)
+# PyEpics.caput(cam_name + ':' + file_type + ':FileName', froot, wait=True)
 
 # Set up SAM model
 sam = sam_model_registry["vit_h"](checkpoint=path_to_sam)

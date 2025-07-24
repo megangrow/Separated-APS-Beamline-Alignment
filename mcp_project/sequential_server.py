@@ -10,6 +10,26 @@ from tools.center_pin_tool import center_pin_core
 mcp = FastMCP("Align Sample")
 
 @mcp.tool
+def run_first_image() -> str:
+    """Runs the first image tool."""
+    return run_first_image_core()
+
+@mcp.tool
+def get_coordinates() -> str:
+    """Gets coordinates from the image."""
+    return get_coordinates_core()
+
+@mcp.tool
+def run_all_images() -> str:
+    """Runs the full sequence of images."""
+    return run_all_images_core()
+
+@mcp.tool
+def center_pin() -> str:
+    """Centers the pin based on calculated offsets."""
+    return center_pin_core()
+
+@mcp.tool
 def align_sample() -> str:
     """Aligns the sample by carrying out a 4-step process"""
     results = []
