@@ -42,20 +42,8 @@ def run_first_image_core():
     config.im_1 = im_1
     config.image_norm = image_norm
     config.display_mask = display_mask
-    save_raw_images(config.output)
 
     return 'First image has been run'
-
-def save_raw_images(out):
-    """Saves all image outputs from the config object to disk."""
-    if not os.path.exists(out):
-        os.makedirs(out)
-
-    config.im_1.save(os.path.join(out, "initial_image.png")) # Initial image
-    config.im_0.save(os.path.join(out, "reference_image.tiff")) # Raw reference image
-    cv2.imwrite(os.path.join(out, "normalized_image.png"), config.image_norm) # Normalized image
-    cv2.imwrite(os.path.join(out, "combined_mask.png"), config.display_mask) # Combined mask image
-    print("Wrote images")
 
 @mcp.tool
 def run_first_image() -> str:

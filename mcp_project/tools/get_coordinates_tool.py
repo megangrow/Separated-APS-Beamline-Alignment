@@ -43,10 +43,14 @@ def get_coordinates_core():
     config.edges.append(min_x)
     config.edges.append(max_x)
     config.beam_pt = beam_pt
-    config.object_pt, mask = get_object_point(masks)
+    result = get_object_point(masks)
+    if result is None:
+        config.object_pt = None
+        mask = None
+    else:
+        config.object_pt, mask = result
     print(f"Beam point: {beam_pt}")
     print(f"Object point: {config.object_pt}")
-    save_images(beam_mask, config.beam_pt, config.object_pt, mask, config.output)
 
     return 'Got beam and object coordinates'
 
@@ -65,38 +69,45 @@ def get_beam_point(mask, beam_contour):
         return (int(x), int(y))
 
 def get_object_point(masks):
-    """Returns a random interior point from the smallest segmentation mask (target object)."""
-    # Check for segmentation masks
     if not masks:
+        print("No masks detected by SAM.")
         return None
-    # Find smallest mask = object of note + all coordinates on it
     smallest_mask = sorted(masks, key=lambda m: m['area'])[0]['segmentation']
-
-    # Use erosion to 'cushion' the mask to keep points away from edges
+    print(f"Smallest mask area: {np.sum(smallest_mask)} pixels")
     kernel = np.ones((3, 3), np.uint8)
-    cushioned_mask = cv2.erode(smallest_mask.astype(np.uint8), kernel, iterations=10)
+    #cushioned_mask = cv2.erode(smallest_mask.astype(np.uint8), kernel, iterations=10)
+    cushioned_mask = smallest_mask.astype(np.uint8)
+    print(f"Pixels after erosion: {np.sum(cushioned_mask)}")
     ys, xs = np.where(cushioned_mask)
-    
-    # Ensures there are pixels on the mask + picks random coordinate
     if len(xs) == 0:
+        print("No pixels left in eroded mask, cannot find object point.")
         return None
     idx = np.random.choice(len(xs))
     return (int(xs[idx]), int(ys[idx])), smallest_mask
 
-def save_images(beam_mask, beam_point, object_point, smallest_mask, out):
-    """Saves all image outputs from the config object to disk."""
-    cv2.imwrite(os.path.join(out, "beam_mask.png"), beam_mask)
-    cv2.imwrite("segmented_mask.png", (smallest_mask * 255).astype(np.uint8))
+# def save_images(beam_mask, beam_point, object_point, smallest_mask, out):
+#     """Saves all image outputs from the config object to disk."""
+#     if beam_mask is None:
+#         raise ValueError("Image to save is None (beam mask). Check image loading or processing.")
+#     if not isinstance(beam_mask, np.ndarray):
+#         raise TypeError(f"Image to save must be numpy array (beam mask), got {type(beam_mask)}")
+#     cv2.imwrite(os.path.join(out, "beam_mask.png"), beam_mask)
 
-    # Convert beam mask to color for overlay + save
-    color_img = cv2.cvtColor(beam_mask, cv2.COLOR_GRAY2BGR)
-    cv2.circle(color_img, beam_point, radius=10, color=(0, 0, 255), thickness=-1)     # Red circle
-    cv2.circle(color_img, object_point, radius=10, color=(255, 0, 0), thickness=-1)   # Blue circle
-    plt.imshow(cv2.cvtColor(color_img, cv2.COLOR_BGR2RGB))
-    plt.axis('off')
-    plt.savefig(os.path.join(out, "beam_object_points.png"), dpi=150, bbox_inches="tight")
-    plt.close()
-    print("Wrote images -2")
+#     if smallest_mask is None:
+#         raise ValueError("Image to save is None (seg mask). Check image loading or processing.")
+#     if not isinstance(smallest_mask, np.ndarray):
+#         raise TypeError(f"Image to save must be numpy array (seg mask), got {type(smallest_mask)}")
+#     cv2.imwrite("segmented_mask.png", (smallest_mask * 255).astype(np.uint8))
+
+#     # Convert beam mask to color for overlay + save
+#     color_img = cv2.cvtColor(beam_mask, cv2.COLOR_GRAY2BGR)
+#     cv2.circle(color_img, beam_point, radius=10, color=(0, 0, 255), thickness=-1)     # Red circle
+#     cv2.circle(color_img, object_point, radius=10, color=(255, 0, 0), thickness=-1)   # Blue circle
+#     plt.imshow(cv2.cvtColor(color_img, cv2.COLOR_BGR2RGB))
+#     plt.axis('off')
+#     plt.savefig(os.path.join(out, "beam_object_points.png"), dpi=150, bbox_inches="tight")
+#     plt.close()
+#     print("Wrote images")
 
 @mcp.tool
 def get_coordinates() -> str:
