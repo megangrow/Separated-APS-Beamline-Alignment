@@ -17,28 +17,28 @@ from scipy.ndimage import median_filter
 from tools import config
 
 # Move motors and capture images (uses test images)
-def move_motor(angle, time_needed):
-    config.mtr_vertRot.move(angle, wait=True)
-    if config.capture_index >= len(config.test_images): 
-        config.capture_index = 0
-    pfname = config.test_images[config.capture_index] 
-    config.capture_index += 1
-    return pfname
+# def move_motor(angle, time_needed):
+#     config.mtr_vertRot.move(angle, wait=True)
+#     if config.capture_index >= len(config.test_images): 
+#         config.capture_index = 0
+#     pfname = config.test_images[config.capture_index] 
+#     config.capture_index += 1
+#     return pfname
 
 # Move motors and capture images (actual)
-# def move_motor(angle, time_needed): 
-#     config.mtr_vertRot.move(angle, wait=True)
-#     PyEpics.caput(config.cam_name + ':' + config.camera_type + ':ImageMode', 'Single', wait=True)
-#     PyEpics.caput(config.cam_name + ':' + config.camera_type + ':AcquireTime', time_needed, wait=True)
-#     PyEpics.caput(config.cam_name + ':' + config.file_type +':AutoSave', 'Yes', wait=True)
-#     time.sleep(0.05)
-#     PyEpics.caput(config.cam_name + ':' + config.camera_type + ':Acquire', 1, wait=True)
-#     time.sleep(0.05)
-#     PyEpics.caput(config.cam_name + ':' + config.file_type + ':AutoSave', 'No', wait=True)
-#     time.sleep(0.05)
-#     fname=PyEpics.caget(config.cam_name + ':' + config.file_type + ':FileName_RBV', 'str') + "_%06d"%(PyEpics.caget(config.cam_name + ':' + config.file_type + ':FileNumber_RBV')-1) + '.tif'
-#     pfname = os.path.join(config.name, fname)
-#     return pfname
+def move_motor(angle, time_needed): 
+    config.mtr_vertRot.move(angle, wait=True)
+    PyEpics.caput(config.cam_name + ':' + config.camera_type + ':ImageMode', 'Single', wait=True)
+    PyEpics.caput(config.cam_name + ':' + config.camera_type + ':AcquireTime', time_needed, wait=True)
+    PyEpics.caput(config.cam_name + ':' + config.file_type +':AutoSave', 'Yes', wait=True)
+    time.sleep(0.05)
+    PyEpics.caput(config.cam_name + ':' + config.camera_type + ':Acquire', 1, wait=True)
+    time.sleep(0.05)
+    PyEpics.caput(config.cam_name + ':' + config.file_type + ':AutoSave', 'No', wait=True)
+    time.sleep(0.05)
+    fname=PyEpics.caget(config.cam_name + ':' + config.file_type + ':FileName_RBV', 'str') + "_%06d"%(PyEpics.caget(config.cam_name + ':' + config.file_type + ':FileNumber_RBV')-1) + '.tif'
+    pfname = os.path.join(config.name, fname)
+    return pfname
 
 # Takes two images (w/ and w/out object)
 def move_motors_normalize():

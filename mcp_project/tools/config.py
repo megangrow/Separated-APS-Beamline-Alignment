@@ -42,7 +42,7 @@ radius = None
 start_theta = None
 
 
-# Motor + camera names
+# Motor + camera names - change based on setup
 cam_name = '1idPG1'
 samX_nm = '1ide1:m34' # sample x-direction
 samZ_nm = '1ide1:m36' # sample z-direction
@@ -50,17 +50,17 @@ vertRot_nm = '1ide:m9' # vertical rotation axis
 transRotAx_nm = '1ide1:m101' # translation of axis under rotation stage
 
 # Motor setup - test
-mtr_samX   = DummyMotor(samX_nm) 
-mtr_samZ   = DummyMotor(samZ_nm) 
-mtr_vertRot  = DummyMotor(vertRot_nm)
-mtr_transRotAx  = DummyMotor(transRotAx_nm)
+# mtr_samX   = DummyMotor(samX_nm) 
+# mtr_samZ   = DummyMotor(samZ_nm) 
+# mtr_vertRot  = DummyMotor(vertRot_nm)
+# mtr_transRotAx  = DummyMotor(transRotAx_nm)
 
 # Motor setup - actual
-# mtr_samX = PyEpics.Motor(samX_nm) 
-# mtr_samZ = PyEpics.Motor(samZ_nm)
-# mtr_vertRot = PyEpics.Motor(vertRot_nm) 
-# mtr_transRotAx = PyEpics.Motor(transRotAx_nm) 
-# PyEpics.caput(cam_name + ':' + file_type + ':FileName', froot, wait=True)
+mtr_samX = PyEpics.Motor(samX_nm) 
+mtr_samZ = PyEpics.Motor(samZ_nm)
+mtr_vertRot = PyEpics.Motor(vertRot_nm) 
+mtr_transRotAx = PyEpics.Motor(transRotAx_nm) 
+PyEpics.caput(cam_name + ':' + file_type + ':FileName', froot, wait=True)
 
 # Set up SAM model
 sam = sam_model_registry["vit_h"](checkpoint=path_to_sam)

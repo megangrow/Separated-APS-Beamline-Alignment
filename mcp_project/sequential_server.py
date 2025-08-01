@@ -1,11 +1,18 @@
-# argo_bridge custom base url:http://localhost:7285
-# argo-proxy custom base url: http://localhost:55068
-
+# This server contains the tools to run the full sequential alignment process as well
+# as each of the four individual steps.
 from fastmcp import FastMCP
 from tools.run_first_image_tool import run_first_image_core
 from tools.get_coordinates_tool import get_coordinates_core
 from tools.run_all_images_tool import run_all_images_core
 from tools.center_pin_tool import center_pin_core
+
+def align_sample_core() -> str:
+    results = []
+    results.append(run_first_image_core())
+    results.append(get_coordinates_core())
+    results.append(run_all_images_core())
+    results.append(center_pin_core())
+    return "\n".join(results)
 
 mcp = FastMCP("Align Sample")
 
@@ -33,14 +40,6 @@ def center_pin() -> str:
     Provides alignment verification through trajectory visualization."""
     return center_pin_core()
 
-def align_sample_core() -> str:
-    results = []
-    results.append(run_first_image_core())
-    results.append(get_coordinates_core())
-    results.append(run_all_images_core())
-    results.append(center_pin_core())
-    return "\n".join(results)
-
 @mcp.tool
 def align_sample() -> str:
     """Runs the complete beamline alignment workflow by sequentially executing:
@@ -51,4 +50,3 @@ def align_sample() -> str:
 
 if __name__ == "__main__":
     mcp.run()
-    #print(align_sample_core())

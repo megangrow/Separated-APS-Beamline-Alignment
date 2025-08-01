@@ -85,30 +85,6 @@ def get_object_point(masks):
     idx = np.random.choice(len(xs))
     return (int(xs[idx]), int(ys[idx])), smallest_mask
 
-# def save_images(beam_mask, beam_point, object_point, smallest_mask, out):
-#     """Saves all image outputs from the config object to disk."""
-#     if beam_mask is None:
-#         raise ValueError("Image to save is None (beam mask). Check image loading or processing.")
-#     if not isinstance(beam_mask, np.ndarray):
-#         raise TypeError(f"Image to save must be numpy array (beam mask), got {type(beam_mask)}")
-#     cv2.imwrite(os.path.join(out, "beam_mask.png"), beam_mask)
-
-#     if smallest_mask is None:
-#         raise ValueError("Image to save is None (seg mask). Check image loading or processing.")
-#     if not isinstance(smallest_mask, np.ndarray):
-#         raise TypeError(f"Image to save must be numpy array (seg mask), got {type(smallest_mask)}")
-#     cv2.imwrite("segmented_mask.png", (smallest_mask * 255).astype(np.uint8))
-
-#     # Convert beam mask to color for overlay + save
-#     color_img = cv2.cvtColor(beam_mask, cv2.COLOR_GRAY2BGR)
-#     cv2.circle(color_img, beam_point, radius=10, color=(0, 0, 255), thickness=-1)     # Red circle
-#     cv2.circle(color_img, object_point, radius=10, color=(255, 0, 0), thickness=-1)   # Blue circle
-#     plt.imshow(cv2.cvtColor(color_img, cv2.COLOR_BGR2RGB))
-#     plt.axis('off')
-#     plt.savefig(os.path.join(out, "beam_object_points.png"), dpi=150, bbox_inches="tight")
-#     plt.close()
-#     print("Wrote images")
-
 @mcp.tool
 def get_coordinates() -> str:
     return get_coordinates_core()
